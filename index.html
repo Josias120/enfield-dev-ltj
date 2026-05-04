@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enfield Dev Ltd. — Build the Future</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e17;
+    --bg2: #0f1422;
+    --bg3: #151c2e;
+    --card: #111827;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00e5a0;
+    --accent2: #00b8ff;
+    --text: #f0f4ff;
+    --muted: #8892aa;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,14,23,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-dot {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.45rem 0.9rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--text);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .nav-links a.active { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #0a0e17 !important;
+    border-radius: 8px;
+    padding: 0.45rem 1.1rem !important;
+    font-weight: 600 !important;
+  }
+
+  .nav-cta:hover { opacity: 0.9; background: var(--accent) !important; }
+
+  /* PAGES */
+  .page { display: none; padding-top: 64px; }
+  .page.active { display: block; }
+
+  /* SECTION WRAPPER */
+  .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-sm { padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; }
+
+  /* HERO */
+  .hero {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -200px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.25);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+  }
+
+  h1 span { color: var(--accent); }
+
+  .hero p {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    max-width: 540px;
+  }
+
+  .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.8rem 1.8rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0e17;
+  }
+
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-outline:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+    padding-top: 4rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* SECTION HEADINGS */
+  .sec-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-family: var(--font-head);
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .lead { font-size: 1.05rem; color: var(--muted); max-width: 600px; margin-bottom: 3rem; }
+
+  /* CARD GRID */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .card:hover { border-color: rgba(0,229,160,0.2); transform: translateY(-2px); }
+
+  .card-icon {
+    width: 48px; height: 48px;
+    background: rgba(0,229,160,0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* TEAM CARDS */
+  .team-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .team-card:hover { border-color: rgba(0,229,160,0.25); transform: translateY(-3px); }
+
+  .team-avatar {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-head);
+    font-size: 3.5rem;
+    font-weight: 800;
+  }
+
+  .team-body { padding: 1.5rem; }
+
+  .team-name {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .team-role {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.85rem;
+  }
+
+  .team-bio { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+
+  .tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+  /* JOB LISTING */
+  .job-header {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .job-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0 1.5rem; }
+
+  .job-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+  }
+
+  .job-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .list-check { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
+
+  .list-check li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  .list-check li::before {
+    content: '';
+    display: block;
+    width: 18px; height: 18px;
+    min-width: 18px;
+    background: rgba(0,229,160,0.15);
+    border: 1px solid rgba(0,229,160,0.3);
+    border-radius: 50%;
+    margin-top: 3px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2 2 4-4' stroke='%2300e5a0' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* FORM */
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .form-full { grid-column: 1 / -1; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+  }
+
+  input, select, textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+    width: 100%;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: rgba(0,229,160,0.4);
+    background: rgba(0,229,160,0.04);
+  }
+
+  input::placeholder, textarea::placeholder { color: rgba(136,146,170,0.5); }
+
+  select option { background: var(--bg2); color: var(--text); }
+
+  textarea { resize: vertical; min-height: 120px; }
+
+  .form-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent);
+    color: #0a0e17;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* SUCCESS MESSAGE */
+  .success-msg {
+    display: none;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.25);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    color: var(--accent);
+    font-weight: 500;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  /* COURSE CARDS */
+  .course-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+
+  .course-card:hover { border-color: rgba(0,184,255,0.3); transform: translateY(-2px); }
+
+  .course-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  .course-title { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: var(--text); }
+  .course-provider { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+  .course-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+  .course-link-tag { font-size: 0.8rem; color: var(--accent2); font-weight: 600; margin-top: auto; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  footer strong { color: var(--text); }
+
+  /* PERKS ROW */
+  .perks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .perk {
+    background: rgba(0,229,160,0.05);
+    border: 1px solid rgba(0,229,160,0.12);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .perk-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .perk-text { font-size: 0.85rem; color: var(--muted); }
+  .perk-title { font-weight: 600; color: var(--text); font-size: 0.9rem; margin-bottom: 0.2rem; }
+
+  /* MOBILE */
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; transition: all 0.3s; }
+
+  @media (max-width: 700px) {
+    .hamburger { display: block; }
+    .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: var(--bg2); padding: 1rem; flex-direction: column; border-bottom: 1px solid var(--border); }
+    .nav-links.open { display: flex; }
+    .form-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: 1fr; gap: 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    .section { padding: 3rem 1.25rem; }
+    .hero { padding: 3rem 1.25rem; }
+    .form-card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#" onclick="showPage('home')">
+    <span class="logo-dot"></span>
+    Enfield Dev Ltd.
+  </a>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('team')" id="nav-team">Our Team</a></li>
+    <li><a onclick="showPage('jobs')" id="nav-jobs">Jobs</a></li>
+    <li><a onclick="showPage('courses')" id="nav-courses">Courses</a></li>
+    <li><a onclick="showPage('apply')" class="nav-cta" id="nav-apply">Apply Now</a></li>
+  </ul>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div style="position:relative;overflow:hidden;">
+    <div class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-glow"></div>
+      <div class="hero-content">
+        <div class="badge"><span class="badge-dot"></span>Now hiring junior developers</div>
+        <h1>We build the <span>web of tomorrow</span> — together.</h1>
+        <p>Enfield Dev Ltd. is a growing web development company based in Enfield. We're looking for passionate, trained developers to join our team and shape the future of the web.</p>
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="showPage('apply')">Apply Now &rarr;</button>
+          <button class="btn btn-outline" onclick="showPage('jobs')">View Open Roles</button>
+        </div>
+      </div>
+    </div>
+    <hr class="divider" style="max-width:1100px;margin:0 auto;">
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section">
+    <div class="sec-label">About Us</div>
+    <h2>Who is Enfield Dev Ltd.?</h2>
+    <p class="lead">We're a passionate team of developers, designers and digital thinkers creating exceptional web experiences for clients across the UK. Founded in Enfield, we've grown by nurturing raw talent into skilled professionals.</p>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">🚀</div>
+        <h3>Our Mission</h3>
+        <p style="color:var(--muted);font-size:0.92rem;">To deliver cutting-edge, accessible web solutions while investing in the next generation of web developers through hands-on training and real project experience.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h3>Our Impact</h3>
+        <p style="color:var(--muted);font-size:0.92rem;">We've delivered over 80 projects for clients ranging from local businesses to national charities, always putting quality and accessibility first in everything we build.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💡</div>
+        <h3>Our Culture</h3>
+        <p style="color:var(--muted);font-size:0.92rem;">Collaborative, curious and inclusive. We hold regular code reviews, learning sessions and hackathons. Everyone's voice matters here, regardless of their level.</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div>
+        <div class="stat-num">80<span>+</span></div>
+        <div class="stat-label">Projects delivered</div>
+      </div>
+      <div>
+        <div class="stat-num">14<span></span></div>
+        <div class="stat-label">Developers on the team</div>
+      </div>
+      <div>
+        <div class="stat-num">5<span>★</span></div>
+        <div class="stat-label">Average client rating</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY JOIN -->
+  <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+    <div class="section">
+      <div class="sec-label">Why Join Us</div>
+      <h2>A place to grow, not just work.</h2>
+      <p class="lead">We believe the best developers are made, not found. That's why we invest in your growth from day one.</p>
+      <div class="grid-2">
+        <div class="card" style="background:var(--card);">
+          <h3>🎓 Structured Training</h3>
+          <p style="color:var(--muted);font-size:0.92rem;margin-top:0.5rem;">Every junior developer joins with a personalised learning plan, guided mentoring sessions and access to premium online courses — all paid for by us.</p>
+        </div>
+        <div class="card" style="background:var(--card);">
+          <h3>💻 Real Projects</h3>
+          <p style="color:var(--muted);font-size:0.92rem;margin-top:0.5rem;">No busy-work. From week one you'll be contributing to live client projects, building a portfolio you'll be proud to show off.</p>
+        </div>
+        <div class="card" style="background:var(--card);">
+          <h3>📈 Clear Progression</h3>
+          <p style="color:var(--muted);font-size:0.92rem;margin-top:0.5rem;">We have transparent promotion pathways. Junior → Mid-level → Senior → Lead. Your performance drives your growth, and we track it openly.</p>
+        </div>
+        <div class="card" style="background:var(--card);">
+          <h3>🤝 Inclusive Team</h3>
+          <p style="color:var(--muted);font-size:0.92rem;margin-top:0.5rem;">We actively recruit from diverse backgrounds. You don't need a degree to join us — a portfolio and passion for code is what matters.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERKS -->
+  <div class="section">
+    <div class="sec-label">Benefits</div>
+    <h2>What we offer</h2>
+    <div class="perks">
+      <div class="perk"><div class="perk-icon">💰</div><div class="perk-title">Competitive Salary</div><div class="perk-text">Starting at £26,000 p/a with regular reviews</div></div>
+      <div class="perk"><div class="perk-icon">🏡</div><div class="perk-title">Flexible Working</div><div class="perk-text">Hybrid & remote options available</div></div>
+      <div class="perk"><div class="perk-icon">📚</div><div class="perk-title">Learning Budget</div><div class="perk-text">£1,000/year for courses & conferences</div></div>
+      <div class="perk"><div class="perk-icon">🏖️</div><div class="perk-title">28 Days Holiday</div><div class="perk-text">Plus bank holidays</div></div>
+      <div class="perk"><div class="perk-icon">🩺</div><div class="perk-title">Health Cover</div><div class="perk-text">Private health insurance included</div></div>
+    </div>
+    <div style="margin-top:3rem;text-align:center;">
+      <button class="btn btn-primary" onclick="showPage('apply')" style="margin:0 auto;">Start Your Application &rarr;</button>
+    </div>
+  </div>
+
+  <footer>
+    <strong>Enfield Dev Ltd.</strong> &nbsp;·&nbsp; Enfield, London EN1 &nbsp;·&nbsp; hello@enfielddev.co.uk &nbsp;·&nbsp; &copy; 2026
+  </footer>
+</div>
+
+<!-- TEAM PAGE -->
+<div class="page" id="page-team">
+  <div class="section">
+    <div class="sec-label">Our Team</div>
+    <h2>Meet the trainees</h2>
+    <p class="lead">These are real people who started exactly where you are — with a qualification, a love of code, and ambition. Now they're building things that matter.</p>
+
+    <div class="grid-3">
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#0f2027,#1e3c72);color:#00e5a0;">JA</div>
+        <div class="team-body">
+          <div class="team-name">Jordan Adeyemi</div>
+          <div class="team-role">Junior Front-End Developer</div>
+          <p class="team-bio">Jordan completed a Level 3 IT qualification at Enfield College before joining us. He now works on React-based UI components and accessibility improvements for our client sites.</p>
+          <div class="tech-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">React</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Accessibility</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#0d1b2a,#1b4332);color:#00e5a0;">SP</div>
+        <div class="team-body">
+          <div class="team-name">Sophie Patel</div>
+          <div class="team-role">Junior Full-Stack Developer</div>
+          <p class="team-bio">Sophie came to us fresh from a bootcamp after completing her A-levels. In 8 months she's gone from HTML basics to building Node.js APIs and working on production databases.</p>
+          <div class="tech-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Git</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#1a0533,#3a0ca3);color:#00e5a0;">MC</div>
+        <div class="team-body">
+          <div class="team-name">Marcus Chen</div>
+          <div class="team-role">Trainee Web Developer</div>
+          <p class="team-bio">Marcus joined via an apprenticeship after completing a coding qualification. He specialises in CSS animations and UI/UX design, and has already led the redesign of two client sites.</p>
+          <div class="tech-tags">
+            <span class="tag">CSS</span>
+            <span class="tag">GSAP</span>
+            <span class="tag">UI/UX</span>
+            <span class="tag">WordPress</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#1c0a00,#7c2d12);color:#00e5a0;">RA</div>
+        <div class="team-body">
+          <div class="team-name">Rachael Osei-Ababio</div>
+          <div class="team-role">Junior Back-End Developer</div>
+          <p class="team-bio">Rachael holds a BTEC in IT and taught herself Python before joining us. She now works on server-side logic, API integrations and our internal project management tools.</p>
+          <div class="tech-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Django</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#0f0c29,#302b63);color:#00e5a0;">TN</div>
+        <div class="team-body">
+          <div class="team-name">Tyler Nwosu</div>
+          <div class="team-role">Trainee Web Developer</div>
+          <p class="team-bio">Tyler was fresh out of college when he applied. He joined our most recent cohort and is already building responsive landing pages independently, with clean semantic HTML.</p>
+          <div class="tech-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Bootstrap</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#001510,#004d40);color:#00e5a0;">LM</div>
+        <div class="team-body">
+          <div class="team-name">Layla Mahmoud</div>
+          <div class="team-role">Junior UX Developer</div>
+          <p class="team-bio">Layla bridged design and development after studying UX online. She wireframes, prototypes and builds components, making sure the sites we ship are beautiful and usable.</p>
+          <div class="tech-tags">
+            <span class="tag">Figma</span>
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">User Testing</span>
+            <span class="tag">WCAG</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:3rem;text-align:center;padding:2.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);">
+      <h3>Could this be you?</h3>
+      <p style="color:var(--muted);margin:0.75rem 0 1.5rem;">We're growing our team and looking for junior developers to join this crew.</p>
+      <button class="btn btn-primary" onclick="showPage('apply')">Apply Now &rarr;</button>
+    </div>
+  </div>
+
+  <footer>
+    <strong>Enfield Dev Ltd.</strong> &nbsp;·&nbsp; Enfield, London EN1 &nbsp;·&nbsp; hello@enfielddev.co.uk &nbsp;·&nbsp; &copy; 2026
+  </footer>
+</div>
+
+<!-- JOBS PAGE -->
+<div class="page" id="page-jobs">
+  <div class="section">
+    <div class="sec-label">Open Positions</div>
+    <h2>Join our development team</h2>
+    <p class="lead">We currently have openings for Junior Web Developers. No degree required — just skills, drive and a portfolio that shows what you can do.</p>
+
+    <div class="job-header">
+      <div class="sec-label">Featured Role</div>
+      <h2 style="font-size:1.8rem;margin-bottom:0.5rem;">Junior Web Developer</h2>
+      <div class="job-meta">
+        <span class="job-tag">📍 Enfield, London (Hybrid)</span>
+        <span class="job-tag">⏱ Full-time</span>
+        <span class="job-tag">💰 £26,000 – £30,000 p/a</span>
+        <span class="job-tag">🎓 Entry Level</span>
+        <span class="job-tag" style="color:var(--accent);border-color:rgba(0,229,160,0.3);">✦ Actively Hiring</span>
+      </div>
+      <p style="color:var(--muted);font-size:0.95rem;">We're hiring junior web developers to join our growing team at Enfield Dev Ltd. This is an excellent opportunity for someone who has completed relevant training and is ready to take on real-world client projects in a supportive environment.</p>
+      <button class="btn btn-primary" onclick="showPage('apply')" style="margin-top:1.25rem;">Apply for This Role &rarr;</button>
+    </div>
+
+    <div class="job-section">
+      <h3>Role Overview</h3>
+      <p style="color:var(--muted);font-size:0.92rem;margin-top:0.75rem;">As a Junior Web Developer at Enfield Dev Ltd., you will work closely with our senior developers and project managers to design, build and maintain websites and web applications for a diverse range of clients. You will receive structured mentoring, access to a learning budget, and opportunities to lead small features from day one.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="job-section" style="margin:0;">
+        <h3>Key Responsibilities</h3>
+        <ul class="list-check">
+          <li>Build responsive, accessible websites using HTML, CSS and JavaScript</li>
+          <li>Collaborate with designers to translate wireframes into working code</li>
+          <li>Write clean, well-documented and maintainable code</li>
+          <li>Participate in code reviews and provide constructive feedback</li>
+          <li>Test websites across browsers and devices for compatibility</li>
+          <li>Debug issues and optimise site performance</li>
+          <li>Attend team stand-ups and contribute to project planning</li>
+          <li>Continuously learn new tools and technologies</li>
+        </ul>
+      </div>
+
+      <div class="job-section" style="margin:0;">
+        <h3>Required Skills</h3>
+        <ul class="list-check">
+          <li>Solid understanding of HTML5 and CSS3</li>
+          <li>Working knowledge of JavaScript (ES6+)</li>
+          <li>Familiarity with version control (Git / GitHub)</li>
+          <li>Understanding of responsive design principles</li>
+          <li>Good problem-solving and communication skills</li>
+          <li>Willingness to learn and receive feedback</li>
+          <li>Eye for detail and design consistency</li>
+          <li>Ability to manage time and work to deadlines</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job-section" style="margin-top:1.5rem;">
+      <h3>Required Qualifications</h3>
+      <p style="color:var(--muted);font-size:0.9rem;margin-top:0.5rem;">We consider a range of qualifications. One or more of the following are expected:</p>
+      <ul class="list-check" style="margin-top:1rem;">
+        <li>BTEC Level 3 in Information Technology or Computing (Merit or above)</li>
+        <li>A-Levels including Computer Science or a related subject</li>
+        <li>Completion of an accredited coding bootcamp (minimum 12 weeks)</li>
+        <li>An apprenticeship or T-Level in Digital Technology</li>
+        <li>A relevant online certification (Codecademy, freeCodeCamp, etc.) supported by a portfolio</li>
+        <li>Equivalent international qualification in a computing-related field</li>
+      </ul>
+    </div>
+
+    <div class="job-section">
+      <h3>Desirable (not essential)</h3>
+      <ul class="list-check">
+        <li>Experience with a JavaScript framework (React, Vue or similar)</li>
+        <li>Basic knowledge of back-end technologies (Node.js, PHP or Python)</li>
+        <li>Familiarity with CMS platforms (WordPress, Webflow)</li>
+        <li>Experience with design tools (Figma, Adobe XD)</li>
+        <li>Understanding of basic SEO principles</li>
+      </ul>
+    </div>
+
+    <div class="perks" style="margin-top:0;">
+      <div class="perk"><div class="perk-icon">💰</div><div class="perk-title">£26k–£30k</div><div class="perk-text">Competitive starting salary</div></div>
+      <div class="perk"><div class="perk-icon">🏡</div><div class="perk-title">Hybrid</div><div class="perk-text">3 days office, 2 remote</div></div>
+      <div class="perk"><div class="perk-icon">📚</div><div class="perk-title">£1k Learning</div><div class="perk-text">Annual training budget</div></div>
+      <div class="perk"><div class="perk-icon">🩺</div><div class="perk-title">Health Cover</div><div class="perk-text">Private health insurance</div></div>
+    </div>
+
+    <div style="margin-top:2.5rem;text-align:center;">
+      <button class="btn btn-primary" onclick="showPage('apply')" style="margin:0 auto;padding:1rem 2.5rem;font-size:1rem;">Apply for This Position &rarr;</button>
+    </div>
+  </div>
+
+  <footer>
+    <strong>Enfield Dev Ltd.</strong> &nbsp;·&nbsp; Enfield, London EN1 &nbsp;·&nbsp; hello@enfielddev.co.uk &nbsp;·&nbsp; &copy; 2026
+  </footer>
+</div>
+
+<!-- COURSES PAGE -->
+<div class="page" id="page-courses">
+  <div class="section">
+    <div class="sec-label">Learning Resources</div>
+    <h2>Recommended courses & resources</h2>
+    <p class="lead">Whether you're preparing to apply or already on our team, these are the platforms and courses we trust to build great web developers.</p>
+
+    <div style="margin-bottom:2rem;">
+      <div class="sec-label" style="margin-bottom:1rem;">🎓 Full Courses</div>
+      <div class="grid-3">
+
+        <a class="course-card" href="https://www.codecademy.com/catalog/language/html-css" target="_blank">
+          <div class="course-icon" style="background:rgba(0,229,160,0.12);">🎯</div>
+          <div class="course-title">HTML & CSS on Codecademy</div>
+          <div class="course-provider">Codecademy</div>
+          <p class="course-desc">Beginner-friendly, interactive lessons covering HTML structure, CSS styling, layouts and responsive design. Highly recommended for new starters.</p>
+          <div class="course-link-tag">Open Course &rarr;</div>
+        </a>
+
+        <a class="course-card" href="https://www.youtube.com/watch?v=G3e-cpL7ofc" target="_blank">
+          <div class="course-icon" style="background:rgba(255,0,0,0.08);">▶️</div>
+          <div class="course-title">HTML & CSS Full Course (6hrs)</div>
+          <div class="course-provider">YouTube — Dave Gray</div>
+          <p class="course-desc">A comprehensive 6-hour video tutorial covering HTML and CSS from scratch. Perfect for visual learners who prefer to follow along in one sitting.</p>
+          <div class="course-link-tag">Watch Free &rarr;</div>
+        </a>
+
+        <a class="course-card" href="https://www.w3schools.com/" target="_blank">
+          <div class="course-icon" style="background:rgba(0,184,255,0.1);">📖</div>
+          <div class="course-title">W3Schools Reference</div>
+          <div class="course-provider">W3Schools</div>
+          <p class="course-desc">The go-to reference for HTML, CSS, JavaScript and more. Essential bookmarked resource for any web developer, junior or senior. Includes live code examples.</p>
+          <div class="course-link-tag">Visit W3Schools &rarr;</div>
+        </a>
+
+      </div>
+    </div>
+
+    <div style="margin-bottom:2rem;">
+      <div class="sec-label" style="margin-bottom:1rem;">🎬 Video Tutorials</div>
+      <div class="grid-3">
+
+        <a class="course-card" href="https://www.youtube.com/watch?v=EOpt0HLymis" target="_blank">
+          <div class="course-icon" style="background:rgba(255,180,0,0.1);">👥</div>
+          <div class="course-title">Build a Team Page</div>
+          <div class="course-provider">YouTube Tutorial</div>
+          <p class="course-desc">A guided tutorial on building a professional team/staff page using HTML and CSS. Great for practising real-world UI patterns used in industry.</p>
+          <div class="course-link-tag">Watch Tutorial &rarr;</div>
+        </a>
+
+        <a class="course-card" href="https://www.youtube.com/watch?v=KiMANNqM0yI" target="_blank">
+          <div class="course-icon" style="background:rgba(0,229,160,0.1);">🃏</div>
+          <div class="course-title">Card View Design</div>
+          <div class="course-provider">YouTube Tutorial</div>
+          <p class="course-desc">Learn how to design and build card-based UI layouts — a pattern used across nearly every modern website. Essential front-end skill.</p>
+          <div class="course-link-tag">Watch Tutorial &rarr;</div>
+        </a>
+
+        <a class="course-card" href="https://www.w3schools.com/howto/howto_css_team.asp" target="_blank">
+          <div class="course-icon" style="background:rgba(0,184,255,0.1);">🏗️</div>
+          <div class="course-title">How to Make a Team Page</div>
+          <div class="course-provider">W3Schools</div>
+          <p class="course-desc">A step-by-step guide with interactive examples on building a responsive team member section using HTML and CSS. Clean, simple and practical.</p>
+          <div class="course-link-tag">View Guide &rarr;</div>
+        </a>
+
+      </div>
+    </div>
+
+    <div style="margin-bottom:2rem;">
+      <div class="sec-label" style="margin-bottom:1rem;">🌐 Inspiration & Examples</div>
+      <div class="grid-2">
+
+        <a class="course-card" href="https://ash-17702.github.io/Hot-Beans-Web/" target="_blank">
+          <div class="course-icon" style="background:rgba(0,229,160,0.1);">🌱</div>
+          <div class="course-title">Hot Beans Web — Example Site</div>
+          <div class="course-provider">Student Project Reference</div>
+          <p class="course-desc">A student-built example of a developer recruitment website — similar to what you'll be building. Great for understanding the brief and seeing what's achievable.</p>
+          <div class="course-link-tag">View Example &rarr;</div>
+        </a>
+
+        <a class="course-card" href="https://www.discoverdigitalenfield.co.uk/" target="_blank">
+          <div class="course-icon" style="background:rgba(0,184,255,0.1);">📍</div>
+          <div class="course-title">Discover Digital Enfield</div>
+          <div class="course-provider">Digital Enfield Hub</div>
+          <p class="course-desc">Explore digital career opportunities, tech events and training resources in the Enfield area. Useful for connecting with the local tech community.</p>
+          <div class="course-link-tag">Explore &rarr;</div>
+        </a>
+
+      </div>
+    </div>
+
+    <div style="padding:2rem;background:var(--card);border:1px solid rgba(0,229,160,0.15);border-radius:var(--radius-lg);text-align:center;margin-top:1rem;">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem;">🎓</div>
+      <h3>Already training? Apply when you're ready.</h3>
+      <p style="color:var(--muted);font-size:0.92rem;margin:0.75rem 0 1.5rem;max-width:480px;margin-left:auto;margin-right:auto;">We review applications on a rolling basis. You don't need to have finished every course — a strong portfolio and attitude matters more.</p>
+      <button class="btn btn-primary" onclick="showPage('apply')">Apply Now &rarr;</button>
+    </div>
+  </div>
+
+  <footer>
+    <strong>Enfield Dev Ltd.</strong> &nbsp;·&nbsp; Enfield, London EN1 &nbsp;·&nbsp; hello@enfielddev.co.uk &nbsp;·&nbsp; &copy; 2026
+  </footer>
+</div>
+
+<!-- APPLY PAGE -->
+<div class="page" id="page-apply">
+  <div class="section">
+    <div class="sec-label">Apply</div>
+    <h2>Start your application</h2>
+    <p class="lead">Fill in the form below and we'll review your application within 5 working days. Make sure your portfolio link is up to date!</p>
+
+    <div class="form-card">
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label for="fname">First Name *</label>
+          <input type="text" id="fname" placeholder="e.g. Jordan" required>
+        </div>
+
+        <div class="form-group">
+          <label for="lname">Last Name *</label>
+          <input type="text" id="lname" placeholder="e.g. Adeyemi" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="+44 7700 000000">
+        </div>
+
+        <div class="form-group form-full">
+          <label for="role">Role Applying For *</label>
+          <select id="role">
+            <option value="">— Select a role —</option>
+            <option>Junior Web Developer</option>
+            <option>Trainee Web Developer (Apprenticeship)</option>
+            <option>Junior Front-End Developer</option>
+            <option>Junior Back-End Developer</option>
+          </select>
+        </div>
+
+        <div class="form-group form-full">
+          <label for="qual">Highest Relevant Qualification *</label>
+          <select id="qual">
+            <option value="">— Select your qualification —</option>
+            <option>BTEC Level 3 in IT / Computing</option>
+            <option>A-Levels (inc. Computer Science)</option>
+            <option>Coding Bootcamp Certificate</option>
+            <option>T-Level in Digital Technology</option>
+            <option>Apprenticeship in Digital</option>
+            <option>Online Certification (Codecademy, freeCodeCamp, etc.)</option>
+            <option>Degree in Computer Science or related field</option>
+            <option>Other / Self-taught</option>
+          </select>
+        </div>
+
+        <div class="form-group form-full">
+          <label for="portfolio">Portfolio or GitHub URL *</label>
+          <input type="url" id="portfolio" placeholder="https://yourportfolio.com or github.com/yourusername">
+        </div>
+
+        <div class="form-group form-full">
+          <label for="skills">Key Technical Skills *</label>
+          <input type="text" id="skills" placeholder="e.g. HTML, CSS, JavaScript, React, Python...">
+        </div>
+
+        <div class="form-group form-full">
+          <label for="experience">Relevant Experience</label>
+          <textarea id="experience" placeholder="Tell us about any work experience, freelance projects, volunteering or personal projects you've completed. Don't worry if this is limited — we're interested in your attitude too."></textarea>
+        </div>
+
+        <div class="form-group form-full">
+          <label for="cover">Cover Letter / Why Enfield Dev? *</label>
+          <textarea id="cover" style="min-height:150px;" placeholder="Why do you want to join Enfield Dev Ltd.? What excites you about web development? What would you bring to our team?"></textarea>
+        </div>
+
+        <div class="form-group form-full">
+          <label for="hear">How did you hear about us?</label>
+          <select id="hear">
+            <option value="">— Select —</option>
+            <option>College / University</option>
+            <option>Indeed / LinkedIn</option>
+            <option>Word of mouth / Friend</option>
+            <option>Google Search</option>
+            <option>Social Media</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group form-full">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-weight:400;color:var(--muted);">
+            <input type="checkbox" id="consent" style="width:auto;margin-top:3px;accent-color:var(--accent);">
+            I confirm the information provided is accurate and I consent to Enfield Dev Ltd. storing my data for recruitment purposes.
+          </label>
+        </div>
+
+        <div class="form-full">
+          <button class="submit-btn" onclick="submitForm()">Submit Application</button>
+          <div class="success-msg" id="successMsg">
+            ✓ Application received! We'll be in touch within 5 working days. Thank you for applying to Enfield Dev Ltd.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="margin-top:1.5rem;padding:1.25rem 1.5rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);display:flex;gap:1rem;align-items:flex-start;">
+      <span style="font-size:1.2rem;">📧</span>
+      <div>
+        <div style="font-weight:600;font-size:0.9rem;margin-bottom:0.25rem;">Prefer to email?</div>
+        <p style="color:var(--muted);font-size:0.85rem;">Send your CV and cover letter directly to <strong style="color:var(--accent2);">careers@enfielddev.co.uk</strong> with the subject line "Junior Developer Application".</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <strong>Enfield Dev Ltd.</strong> &nbsp;·&nbsp; Enfield, London EN1 &nbsp;·&nbsp; hello@enfielddev.co.uk &nbsp;·&nbsp; &copy; 2026
+  </footer>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('navLinks').classList.remove('open');
+  }
+
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const role = document.getElementById('role').value;
+    const qual = document.getElementById('qual').value;
+    const portfolio = document.getElementById('portfolio').value.trim();
+    const skills = document.getElementById('skills').value.trim();
+    const cover = document.getElementById('cover').value.trim();
+    const consent = document.getElementById('consent').checked;
+
+    if (!fname || !lname || !email || !role || !qual || !portfolio || !skills || !cover || !consent) {
+      alert('Please fill in all required fields and accept the consent checkbox.');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    document.getElementById('successMsg').style.display = 'block';
+    document.querySelector('.submit-btn').disabled = true;
+    document.querySelector('.submit-btn').style.opacity = '0.5';
+    document.querySelector('.submit-btn').textContent = 'Application Submitted';
+    document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+</body>
+</html>
